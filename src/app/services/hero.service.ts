@@ -5,6 +5,7 @@ import { HEROES } from '../repositories/mock-heroes';
 
 @Injectable()
 export class HeroService {
+
   getHeroes(): Promise<Hero[]> {
 
     return Promise.resolve(HEROES);
@@ -15,5 +16,10 @@ export class HeroService {
       // Simulate server latency with 2 second delay
       setTimeout(() => resolve(this.getHeroes()), 2000);
     });
+  }
+
+  getHero(id: number): Promise<Hero> {
+    return this.getHeroesSlowly()
+               .then(heroes => heroes.find(hero => hero.id === id));
   }
 }
